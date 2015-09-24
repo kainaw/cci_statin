@@ -2,6 +2,7 @@
 	<head>
 		<title>CCI Patient Flow App</title>
 		<link rel='stylesheet' href='style.css'/>
+		<script language='javascript' src='scripts.js'></script>
 	</head>
 	<body>
 		<button id='menuopenbutton'
@@ -15,16 +16,38 @@
 			<hr>
 			<a href=''>Aspirin</a>
 			<a href=''>Blood Pressure</a>
-			<a href=''>Cholesterol</a>
+			<a href='#' onclick="return show('statin_start');">Cholesterol</a>
 			<a href=''>Smoking</a>
 		</div>
 		<div id='content'>
 			<img src='cci-logo.png' id='logo'>
 			<img src='blueplusrule.png' class='rule'>
-			<a href=''>Aspirin</a><br>
-			<a href=''>Blood Pressure</a><br>
-			<a href=''>Cholesterol</a><br>
-			<a href=''>Smoking</a><br>
+			<div id='splashmenu'>
+				<a href=''>Aspirin</a><br>
+				<a href=''>Blood Pressure</a><br>
+				<a href='#' onclick="return show('statin_start');">Cholesterol</a><br>
+				<a href=''>Smoking</a><br>
+			</div>
+			
+			<div id='statin_start' class='flow'>
+				Is the patient &gt;21 years of age?<br>
+				<button type='button' class='yes'>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_u21');"
+				>No</button>
+			</div>
+			
+			<div id='statin_u21' class='flow'>
+				Statin dose recommendations are for patients over the age of 21.
+				<br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
 		</div>
 		<div id='copyright'>
 			By using this application, you agree to the end user <a href='terms.html'>terms and conditions</a>.

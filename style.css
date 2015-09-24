@@ -1,6 +1,8 @@
 body {
 	font-size:400%;
 	text-align:center;
+	margin:0px;
+	padding:0px;
 }
 
 /** Menu Styles **/
@@ -73,7 +75,12 @@ body {
 
 img.rule {
 	width:100%;
+	height:1em;
 	margin:2px 0px 2px 0px;
+}
+
+#splashmenu a {
+	color:black;
 }
 
 #copyright {
@@ -82,4 +89,24 @@ img.rule {
 	bottom:0px;
 	width:100%;
 	background:#4af;
+}
+
+.flow {
+	border:1px solid black;
+	display:none;
+}
+
+.flow button {
+	font-size:inherit;
+	border-radius:0.25em;
+	margin: 2px 0px 2px 0px;
+	background-color:#dde;
+}
+
+.yes {
+	background-color:#9f9 !important;
+}
+
+.no {
+	background-color:#f99 !important;
 }
