@@ -14,7 +14,8 @@
 			>X</button>
 			<img src='cci-logo.png'>
 			<hr>
-			<a href=''>Aspirin</a>
+			<a href='' onclick="return show('patient');">Current Patient</a>
+			<a href='#' onclick="return show('aspirin_start');">Aspirin</a>
 			<a href=''>Blood Pressure</a>
 			<a href='#' onclick="return show('statin_start');">Cholesterol</a>
 			<a href=''>Smoking</a>
@@ -24,12 +25,12 @@
 			<img src='blueplusrule.png' class='rule'>
 			<div id='splashmenu'>
 				<a href='' onclick="return show('patient');">Current Patient</a><br>
-				<a href=''>Aspirin</a><br>
+				<a href='#' onclick="return show('aspirin_start');">Aspirin</a><br>
 				<a href=''>Blood Pressure</a><br>
 				<a href='#' onclick="return show('statin_start');">Cholesterol</a><br>
 				<a href=''>Smoking</a><br>
 			</div>
-			
+
 			<div id='patient' class='flow'>
 				Current Patient<br>
 				<table align='center'>
@@ -45,48 +46,155 @@
 						<option value='b'>Black</option>
 						<option value='o'>Other</option>
 					</select></td></tr>
-					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;' onchange="calculate_ascvd_risk();calculate_statin();">yrs</td></tr>
+					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;' onchange="calculate_ascvd_risk();calculate_statin();calculate_aspirin();">yrs</td></tr>
 					<tr><th colspan='2'>Most Recent Vitals</th></tr>
 					<tr><td>Total Chol</td><td><input type='number' id='patient_tc' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
 					<tr><td>HDL</td><td><input type='number' id='patient_hdl' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
 					<tr><td>LDL</td><td><input type='number' id='patient_ldl' value='' style='width:4em;' onchange="calculate_statin();">mg/dL</td></tr>
-					<tr><td>BP</td><td><input type='number' id='patient_sbp' value='' style='width:3em;' onchange="calculate_ascvd_risk();">/<input type='number' id='patient_dbp' value='' style='width:3em;'></td></tr>
+					<tr><td>BP</td><td><input type='number' id='patient_sbp' value='' style='width:3em;' onchange="calculate_ascvd_risk();calculate_bp();">/<input type='number' id='patient_dbp' value='' style='width:3em;' onchange="calculate_bp();"></td></tr>
+					<tr><td>OO BP<sup><a href='#' onclick="alert('Out of Office Blood Pressure,\nsuch as Ambulatory or Home');return false;">?</a></sup></td><td><input type='number' id='patient_hsbp' value='' style='width:3em;' onchange="calculate_bp();">/<input type='number' id='patient_dbp' value='' style='width:3em;' onchange="calculate_bp();"></td></tr>
 				</table>
 				<table align='center'>
 					<tr><th colspan='2'>Disease and Treatment</th></tr>
-					<tr><td>On BP medication?</td><td><select id='patient_bpmed' style='width:3em;' onchange="calculate_ascvd_risk();">
+					<tr><td>On BP medication</td><td><select id='patient_bpmed' style='width:3.5em;' onchange="calculate_ascvd_risk();">
+						<option value='?'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
-					<tr><td>Tobacco user?</td><td><select id='patient_smoke' style='width:3em;' onchange="calculate_ascvd_risk();">
+					<tr><td>Tobacco user</td><td><select id='patient_smoke' style='width:3.5em;' onchange="calculate_ascvd_risk();calculate_cessation();">
+						<option value='?'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
-					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3em;' onchange="calculate_ascvd_risk();calculate_statin();">
+					<tr><td>Hypertensive</td><td><select id='patient_htn' style='width:3.5em;' onchange="calculate_bp();">
+						<option value='?'>Select</option>
 						<option value='n'>No</option>
-						<option value='1'>I</option>
-						<option value='2'>II</option>
+						<option value='y'>Yes</option>
 					</select></td></tr>
-					<tr><td>Clinical ASCVD?</td><td><select id='patient_ascvd' style='width:3em;' onchange="calculate_statin();">
+					<tr><td>Ischemic Vascular Dis</td><td><select id='patient_ivd' style='width:3.5em;' onchange="calculate_aspirin();">
+						<option value='?'>Select</option>
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
+					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3.5em;' onchange="calculate_ascvd_risk();calculate_statin();">
+						<option value='?'>Select</option>
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
+					<tr><td>Clinical ASCVD</td><td><select id='patient_ascvd' style='width:3.5em;' onchange="calculate_statin();">
+						<option value='?'>Select</option>
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
+					<tr><td>Target Organ Damage</td><td><select id='patient_tod' style='width:3.5em;' onchange="calculate_statin();">
+						<option value='?'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 				</table>
 				<table align='center'>
-					<tr><th colspan='2'>Risk</th></tr>
+					<tr><th colspan='2'>Risk and Recommendations</th></tr>
+					<tr>
+						<td>ASCVD 10yr Risk</td>
+						<td><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td>
+					</tr>
+					<tr>
+						<td>Rec. Aspirin</td>
+						<td><select id='patient_aspirin_recommendation'>
+							<option value='no'>No</option>
+							<option value='yes'>Yes</option>
+						</select>
+						<button type='button' onclick="return show('aspirin_start');">?</button></td>
+					</tr>
+					<tr>
+						<td>Rec. Statin</td>
+						<td><select id='patient_statin_recommendation'>
+							<option value='none'>None</option>
+							<option value='mod'>Moderate</option>
+							<option value='modhi'>Mod-High</option>
+							<option value='hi'>High</option>
+							<option value='modr'>Mod OK</option>
+							<option value='hir'>Mod/Hi OK</option>
+						</select>
+						<button type='button'>?</button></td>
+					</tr>
+					<tr>
+						<td>Smoke Cess</td>
+						<td><select id='patient_cessation'>
+							<option value='none'>None</option>
+							<option value='cessation'>Med/Advice</option>
+						</select>
+						<button type='button'>?</button></td>
+					</tr>
 				</table>
-				ASCVD 10yr Risk <input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%<br>
-				Rec. Statin
-				<select id='patient_statin_recommendation'>
-					<option value='none'>None</option>
-					<option value='mod'>Moderate</option>
-					<option value='modhi'>Mod-High</option>
-					<option value='hi'>High</option>
-					<option value='modr'>Mod OK</option>
-					<option value='hir'>Mod/Hi OK</option>
-				</select>
-				<button type='button'>?</button><br>
-				</table>
+			</div>
+			
+			<div id='aspirin_start' class='flow'>
+				Is the patient &ge;18 years of age?<br>
+				<button type='button' class='yes'
+					onclick="return show('aspirin_ivd');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('aspirin_u18');"
+				>No</button>
+			</div>
+			
+			<div id='aspirin_u18' class='flow'>
+				<div class='inset'>
+					Patient is &lt;18 years old.
+				</div>
+				Aspirin recommendations are for patients over the age of 18.
+				<br>
+				<button type='button'
+					onclick="return force('aspirin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='aspirin_ivd' class='flow'>
+				<div class='inset'>
+					Patient is &ge;18 years old.
+				</div>
+				Does the patient have IVD?<br>
+				<button type='button' class='yes'
+					onclick="return show('aspirin_recommend');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('aspirin_no');"
+				>No</button>
+			</div>
+			
+			<div id='aspirin_no' class='flow'>
+				<div class='inset'>
+					Patient is &ge;18 years old.<br>
+					Patient does not have IVD.
+				</div>
+				A daily aspirin/antithrombotic regimen is not recommended for patients without IVD.
+				<br>
+				<button type='button'
+					onclick="return force('aspirin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='aspirin_recommend' class='flow'>
+				<div class='inset'>
+					Patient is &ge;18 years old.<br>
+					Patient has IVD.
+				</div>
+				A daily aspirin/antithrombotic regimen is recommended for patients &ge;18 years old with IVD.
+				<br>
+				<button type='button'
+					onclick="return force('aspirin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button><br>
+				<span class='note'>Ensure patient does not have an allergy to aspirin.</span>
 			</div>
 			
 			<div id='statin_start' class='flow'>
@@ -103,7 +211,7 @@
 				Statin dose recommendations are for patients over the age of 21.
 				<br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -138,7 +246,7 @@
 				</span>
 				<br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -173,7 +281,7 @@
 				</span>
 				<br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -199,7 +307,7 @@
 				</div>
 				There is no statin recommendation for this patient.<br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -226,7 +334,7 @@
 				</div>
 				There is no statin recommendation for this patient.<br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -286,7 +394,7 @@
 				</span><br>
 				A Higher intensity statin as reasonable.
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -302,7 +410,7 @@
 				</div>
 				There is no statin recommendation for this patient.
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -327,7 +435,7 @@
 					&gt;20mg Simvastatin
 				</span><br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"
@@ -352,7 +460,7 @@
 					20-40mg Simvastatin
 				</span><br>
 				<button type='button'
-					onclick="return show('statin_start');"
+					onclick="return force('statin_start');"
 				>Start Over</button><br>
 				<button type='button'
 					onclick="return show('splashmenu');"

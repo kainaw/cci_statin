@@ -15,7 +15,13 @@ window.addEventListener('resize',resize,true);
 
 var divs = [
 	'splashmenu',
+	'patient',
 	'ascvd',
+	'aspirin_start',
+	'aspirin_u18',
+	'aspirin_ivd',
+	'aspirin_no',
+	'aspirin_recommend',
 	'statin_start',
 	'statin_u21',
 	'statin_cascvd',
@@ -36,18 +42,47 @@ function clear_screen()
 {
 	document.getElementById('menu').style.display='none';
 	divs.forEach(function(item,index,array) {
+		if(document.getElementById(item)==null) alert("MISSING DIV: "+item);
 		document.getElementById(item).style.display='none';
 		document.getElementById(item).style.background='white';
 	});
 }
 
-function show(id)
+function force(id)
 {
 	clear_screen();
 	document.getElementById(id).style.display='block';
 	if(id != 'splashmenu')
 		document.getElementById(id).style.background='#ffd';
-	document.getElementById('copyright').style.bottom='50px;';
+	return false;
+}
+
+function show(id)
+{
+	var age = parseInt(document.getElementById('patient_age').value);
+	if(id == 'aspirin_start' && age>0 && age<18)
+	{
+		id='aspirin_u18';
+	}
+	if(id == 'aspirin_start' && age>=18)
+	{
+		if(document.getElementById('patient_ivd').value=='y')
+		{
+			id='aspirin_recommend';
+		}
+		else if(document.getElementById('patient_ivd').value=='n')
+		{
+			id='aspirin_no';
+		}
+		else
+		{
+			id='aspirin_ivd';
+		}
+	}
+	clear_screen();
+	document.getElementById(id).style.display='block';
+	if(id != 'splashmenu')
+		document.getElementById(id).style.background='#ffd';
 	return false;
 }
 
@@ -112,6 +147,47 @@ function calculate_statin()
 		return false;
 	}
 	document.getElementById('patient_statin_recommendation').value='none';
+	return false;
+}
+
+function calculate_aspirin()
+{
+	if(parseInt(document.getElementById('patient_age').value)>=18 && document.getElementById('patient_ivd').value=='y')
+	{
+		document.getElementById('patient_aspirin_recommendation').value='yes';
+		return false;
+	}
+	document.getElementById('patient_aspirin_recommendation').value='no';
+	return false;
+}
+
+function calculate_cessation()
+{
+	if(document.getElementById('patient_smoke').value=='y')
+	{
+		document.getElementById('patient_cessation').value='cessation';
+		return false;
+	}
+	document.getElementById('patient_cessation').value='none';
+	return false;
+}
+
+function calculate_bp()
+{
+	var sbp = parseInt(document.getElementById('patient_sbp').value);
+	var dbp = parseInt(document.getElementById('patient_sbp').value);
+	if(sbp<140 && dbp<90)
+	{
+		if(document.getElementById('patient_tod').value=='y')
+		{
+			return false;
+		}
+		return false;
+	}
+	else if(sbp<180 && dbp<110)
+	{
+		return false;
+	}
 	return false;
 }
 
