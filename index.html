@@ -4,7 +4,7 @@
 		<link rel='stylesheet' href='style.css'/>
 		<script language='javascript' src='scripts.js'></script>
 	</head>
-	<body>
+	<body onload='resize();'>
 		<button id='menuopenbutton'
 			onclick="document.getElementById('menu').style.display='block';"
 		><img src='menu512.png'></button>
@@ -74,15 +74,18 @@
 				</table>
 				<table align='center'>
 					<tr><th colspan='2'>Risk</th></tr>
-					<tr><td>ASCVD 10yr Risk</td><td colspan='2'><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td></tr>
-					<tr><td colspan='2'>Rec. Statin <select id='patient_statin_recommendation'>
-						<option value='none'>None</option>
-						<option value='mod'>Moderate</option>
-						<option value='modhi'>Mod-High</option>
-						<option value='hi'>High</option>
-						<option value='modr'>Mod OK</option>
-						<option value='hir'>Mod/Hi OK</option>
-					</td><td><button type='button'>?</button></td></tr>
+				</table>
+				ASCVD 10yr Risk <input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%<br>
+				Rec. Statin
+				<select id='patient_statin_recommendation'>
+					<option value='none'>None</option>
+					<option value='mod'>Moderate</option>
+					<option value='modhi'>Mod-High</option>
+					<option value='hi'>High</option>
+					<option value='modr'>Mod OK</option>
+					<option value='hir'>Mod/Hi OK</option>
+				</select>
+				<button type='button'>?</button><br>
 				</table>
 			</div>
 			

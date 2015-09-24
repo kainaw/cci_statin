@@ -1,3 +1,19 @@
+function resize()
+{
+	var maxwidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	if(maxwidth == 0) return false;
+	var logowidth = document.getElementById('logo').offsetWidth;
+	if(maxwidth <= logowidth*4)
+	{
+		alert("logo width*4 = maxwidth");
+		return false;
+	}
+	var adjust = maxwidth/(logowidth*4);
+	document.getElementsByTagName('body')[0].style.fontSize=(adjust*100)+'%';
+	//alert("ajusted to "+(adjust*100)+"%");
+	return false;
+}
+
 var divs = [
 	'splashmenu',
 	'ascvd',
