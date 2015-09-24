@@ -33,18 +33,44 @@
 			<div id='patient' class='flow'>
 				Current Patient<br>
 				<table align='center'>
-					<tr><td>Gender</td><td><select id='patient_gender' style='width:4em;'>
+					<tr><th colspan='2'>Demographics</th></tr>
+					<tr><td>Gender</td><td><select id='patient_gender' style='width:4em;' onchange="calculate_ascvd_risk();">
 						<option value='?'>Select</option>
 						<option value='f'>Female</option>
 						<option value='m'>Male</option>
 					</select></td></tr>
-					<tr><td>Race</td><td><select id='patient_race' style='width:4em;'>
+					<tr><td>Race</td><td><select id='patient_race' style='width:4em;' onchange="calculate_ascvd_risk();">
 						<option value='?'>Select</option>
 						<option value='w'>White</option>
 						<option value='b'>Black</option>
 						<option value='o'>Other</option>
 					</select></td></tr>
-					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;'></td></tr>
+					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;' onchange="calculate_ascvd_risk();">yrs</td></tr>
+					<tr><th colspan='2'>Most Recent Vitals</th></tr>
+					<tr><td>Total Chol</td><td><input type='number' id='patient_tc' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
+					<tr><td>HDL</td><td><input type='number' id='patient_hdl' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
+					<tr><td>LDL</td><td><input type='number' id='patient_ldl' value='' style='width:4em;'>mg/dL</td></tr>
+					<tr><td>BP</td><td><input type='number' id='patient_sbp' value='' style='width:3em;' onchange="calculate_ascvd_risk();">/<input type='number' id='patient_dbp' value='' style='width:3em;'></td></tr>
+				</table>
+				<table align='center'>
+					<tr><th colspan='2'>Disease and Treatment</th></tr>
+					<tr><td>On BP medication?</td><td><select id='patient_bpmed' style='width:3em;' onchange="calculate_ascvd_risk();">
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
+					<tr><td>Tobacco user?</td><td><select id='patient_smoke' style='width:3em;' onchange="calculate_ascvd_risk();">
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
+					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3em;' onchange="calculate_ascvd_risk();">
+						<option value='n'>No</option>
+						<option value='1'>I</option>
+						<option value='2'>II</option>
+					</select></td></tr>
+				</table>
+				<table align='center'>
+					<tr><th colspan='2'>Risk</th></tr>
+					<tr><td>ASCVD 10yr Risk</td><td><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td></tr>
 				</table>
 			</div>
 			
@@ -75,11 +101,274 @@
 				</div>
 				Does the patient have clinical ASCVD?<br>
 				<button type='button' class='yes'
+					onclick="return show('statin_hi1');"
 				>Yes</button>
 				<button type='button' class='no'
-					onclick="return show('statin_u21');"
+					onclick="return show('statin_ldl190');"
 				>No</button><br>
 				<span class='note'>Screen for clinical ASCVD every 5 years.</span>
+			</div>
+			
+			<div id='statin_hi1' class='flow'>
+				<div class='inset'>
+					Patient &gt;21 years old.<br>
+					Patient has clinical ASCVD.
+				</div>
+				The patient should be prescribed a<br>
+				<b>High Intensity statin</b>.<br>
+				<span class='note'>
+					&ge;40mg Atorvastatin<br>
+					&ge;20mg Rosuvastatin<br>
+					&ge;80mg Simvastatin
+				</span>
+				<br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_ldl190' class='flow'>
+				<div class='inset'>
+					Patient &gt;21 years old.<br>
+				</div>
+				Is the patient's most recent LDL &ge;190?<br>
+				<button type='button' class='yes'
+					onclick="return show('statin_hi2');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_a4075');"
+				>No</button><br>
+				<span class='note'>Check LDL every 5 years.</span>
+			</div>
+			
+			<div id='statin_hi2' class='flow'>
+				<div class='inset'>
+					Patient &gt;21 years old.<br>
+					Patient has LDL&ge;190.
+				</div>
+				The patient should be prescribed a<br>
+				<b>High Intensity statin</b>.<br>
+				<span class='note'>
+					&ge;40mg Atorvastatin<br>
+					&ge;20mg Rosuvastatin<br>
+					&ge;80mg Simvastatin
+				</span>
+				<br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_a4075' class='flow'>
+				<div class='inset'>
+					Patient &gt;21 years old.
+				</div>
+				Is the patient between 40 and 75 years old?<br>
+				<button type='button' class='yes'
+					onclick="return show('statin_ldl70');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_no1');"
+				>No</button><br>
+			</div>
+			
+			<div id='statin_no1' class='flow'>
+				<div class='inset'>
+					Patient &lt;40 or &gt;75 years old.
+				</div>
+				There is no statin recommendation for this patient.<br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_ldl70' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.
+				</div>
+				Is the patient's LDL between 70 and 189?<br>
+				<button type='button' class='yes'
+					onclick="return show('statin_ascvd');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_no2');"
+				>No</button><br>
+			</div>
+			
+			<div id='statin_no2' class='flow'>
+				<div class='inset'>
+					Patient &lt;40 or &gt;75 years old.<br>
+					Patient's LDL &lt;70.
+				</div>
+				There is no statin recommendation for this patient.<br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_ascvd' class='flow'>
+				<div class='inset'>
+					Patient &lt;40 or &gt;75 years old.<br>
+					Patient's LDL between 70 and 189.
+				</div>
+				Is the patient's ASCVD risk &ge;7.5%?<br>
+				<button type='button' onclick="return show('ascvd');">Calculate ASCVD Risk</button><br>
+				<button type='button' class='yes'
+					onclick="return show('statin_ldl70');"
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_no2');"
+				>No</button><br>
+			</div>
+			
+			<div id='statin_mod' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.<br>
+					Patient's LDL between 70 and 189.<br>
+					Patient is diabetic.<br>
+					Patient's ASCVD risk &lt;7.5%
+				</div>
+				This patient should be prescribed a<br>
+				<b>Moderate Intensity Statin</b>.<br>
+				<span class='note'>
+					10-20mg Atorvastatin<br>
+					40-80mg Fluvastatin<br>
+					40mg Lovastatin<br>
+					40-80mg Pravastatin<br>
+					5-10mg Rosuvastatin<br>
+					20-40mg Simvastatin
+				</span>
+			</div>
+			
+			<div id='statin_modhi' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.<br>
+					Patient's LDL between 70 and 189.<br>
+					Patient is diabetic.<br>
+					Patient's ASCVD risk &ge;7.5%
+				</div>
+				This patient should be prescribed a<br>
+				<b>Moderate Intensity Statin</b>.<br>
+				<span class='note'>
+					10-20mg Atorvastatin<br>
+					40-80mg Fluvastatin<br>
+					40mg Lovastatin<br>
+					40-80mg Pravastatin<br>
+					5-10mg Rosuvastatin<br>
+					20-40mg Simvastatin
+				</span><br>
+				A Higher intensity statin as reasonable.
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_no3' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.<br>
+					Patient's LDL between 70 and 189.<br>
+					Patient is not diabetic.<br>
+					Patient's ASCVD risk &lt;7.5%
+				</div>
+				There is no statin recommendation for this patient.
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+
+			<div id='statin_himod' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.<br>
+					Patient's LDL between 70 and 189.<br>
+					Patient is not diabetic.<br>
+					Patient's ASCVD risk &ge;7.5%.
+				</div>
+				This patient should be prescribed a<br>
+				<b>Moderate-to-High Intensity Statin</b>.
+				<span class='note'>
+					&gt;10mg Atorvastatin<br>
+					&gt;40mg Fluvastatin<br>
+					&gt;40mg Lovastatin<br>
+					&gt;40mg Pravastatin<br>
+					&gt;5mg Rosuvastatin<br>
+					&gt;20mg Simvastatin
+				</span><br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+
+			<div id='statin_mod2' class='flow'>
+				<div class='inset'>
+					Patient between 40 and 75 years old.<br>
+					Patient's LDL between 70 and 189.<br>
+					Patient is not diabetic.<br>
+					Patient's ASCVD risk &ge;5% and &lt;7.5%.
+				</div>
+				It is reasonable to prescribe this patient a
+				Moderate Intensity Statin.
+				<span class='note'>
+					10-20mg Atorvastatin<br>
+					40-80mg Fluvastatin<br>
+					40mg Lovastatin<br>
+					40-80mg Pravastatin<br>
+					5-10mg Rosuvastatin<br>
+					20-40mg Simvastatin
+				</span><br>
+				<button type='button'
+					onclick="return show('statin_start');"
+				>Start Over</button><br>
+				<button type='button'
+					onclick="return show('splashmenu');"
+				>ABCS Menu</button>
+			</div>
+
+			<div id='ascvd' class='flow'>
+				ASCVD Risk Calculator<br>
+				<table align='center'>
+					<tr><td>Gender</td><td><select id='ascvd_gender' style='width:4em;' onchange="update_gender('ascvd_gender');">
+						<option value='?'>Select</option>
+						<option value='f'>Female</option>
+						<option value='m'>Male</option>
+					</select></td></tr>
+					<tr><td>Race</td><td><select id='ascvd_race' style='width:4em;' onchange="update_race('ascvd_race');">
+						<option value='?'>Select</option>
+						<option value='w'>White</option>
+						<option value='b'>Black</option>
+						<option value='o'>Other</option>
+					</select></td></tr>
+					<tr><td>Age</td><td><input type='number' id='ascvd_age' value='' style='width:4em;' onchange="update_age('ascvd_age');"></td></tr>
+					<tr><td>Total Chol</td><td><input type='number' id='ascvd_tc' value='' style='width:4em;'>mg/dL</td></tr>
+					<tr><td>HDL</td><td><input type='number' id='ascvd_hdl' value='' style='width:4em;'>mg/dL</td></tr>
+					<tr><td>SBP</td><td><input type='number' id='ascvd_sbp' value='' style='width:4em;'>mmHg</td></tr>
+				</table>
+				<table align='center'>
+					<tr><td>On BP medication?</td><td><select id='ascvd_bpmed'><option value='n'>No</option><option value='y'>Yes</option></select></td></tr>
+					<tr><td>Tobacco user?</td><td><select id='ascvd_smoke'><option value='n'>No</option><option value='y'>Yes</option></select></td></tr>
+					<tr><td>Diabetic (type I or II)?</td><td><select id='ascvd_dm'><option value='n'>No</option><option value='y'>Yes</option></select></td></tr>
+				</table>
+				<button type='button' onclick="return statin_ascvd_risk();">Calculate ASCVD Risk</button>
 			</div>
 			
 		</div>
