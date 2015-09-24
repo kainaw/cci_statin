@@ -45,11 +45,11 @@
 						<option value='b'>Black</option>
 						<option value='o'>Other</option>
 					</select></td></tr>
-					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;' onchange="calculate_ascvd_risk();">yrs</td></tr>
+					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;' onchange="calculate_ascvd_risk();calculate_statin();">yrs</td></tr>
 					<tr><th colspan='2'>Most Recent Vitals</th></tr>
 					<tr><td>Total Chol</td><td><input type='number' id='patient_tc' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
 					<tr><td>HDL</td><td><input type='number' id='patient_hdl' value='' style='width:4em;' onchange="calculate_ascvd_risk();">mg/dL</td></tr>
-					<tr><td>LDL</td><td><input type='number' id='patient_ldl' value='' style='width:4em;'>mg/dL</td></tr>
+					<tr><td>LDL</td><td><input type='number' id='patient_ldl' value='' style='width:4em;' onchange="calculate_statin();">mg/dL</td></tr>
 					<tr><td>BP</td><td><input type='number' id='patient_sbp' value='' style='width:3em;' onchange="calculate_ascvd_risk();">/<input type='number' id='patient_dbp' value='' style='width:3em;'></td></tr>
 				</table>
 				<table align='center'>
@@ -62,25 +62,27 @@
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
-					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3em;' onchange="calculate_ascvd_risk();">
+					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3em;' onchange="calculate_ascvd_risk();calculate_statin();">
 						<option value='n'>No</option>
 						<option value='1'>I</option>
 						<option value='2'>II</option>
 					</select></td></tr>
-					<tr><td>Clinical ASCVD?</td><td><select id='patient_ascvd' style='width:3em;'>
+					<tr><td>Clinical ASCVD?</td><td><select id='patient_ascvd' style='width:3em;' onchange="calculate_statin();">
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 				</table>
 				<table align='center'>
 					<tr><th colspan='2'>Risk</th></tr>
-					<tr><td>ASCVD 10yr Risk</td><td><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td></tr>
-					<tr><td>Rec. Statin</td><td><select id='patient_statin_recommendation'>
+					<tr><td>ASCVD 10yr Risk</td><td colspan='2'><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td></tr>
+					<tr><td colspan='2'>Rec. Statin <select id='patient_statin_recommendation'>
 						<option value='none'>None</option>
 						<option value='mod'>Moderate</option>
 						<option value='modhi'>Mod-High</option>
 						<option value='hi'>High</option>
-					</td></tr>
+						<option value='modr'>Mod OK</option>
+						<option value='hir'>Mod/Hi OK</option>
+					</td><td><button type='button'>Explain</button></td></tr>
 				</table>
 			</div>
 			

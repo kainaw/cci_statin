@@ -38,7 +38,7 @@ function show(id)
 
 function statin_start()
 {
-	age = parseInt(document.getElementById('patient_age').value);
+	var age = parseInt(document.getElementById('patient_age').value);
 	if(age<0)
 		return show('statin_start');
 	else if(age<=21)
@@ -47,30 +47,83 @@ function statin_start()
 		return show('statin_cascvd');
 }
 
+function calculate_statin()
+{
+	var age = parseInt(document.getElementById('patient_age').value);
+	if(age<=21)
+	{
+		document.getElementById('patient_statin_recommendation').value='none';
+		return false;
+	}
+	if(document.getElementById('patient_ascvd').value == 'y')
+	{
+		document.getElementById('patient_statin_recommendation').value='hi';
+		return false;
+	}
+	var ldl = parseInt(document.getElementById('patient_ldl').value);
+	if(ldl >= 190)
+	{
+		document.getElementById('patient_statin_recommendation').value='hi';
+		return false;
+	}
+	if(age<40 || age>75 || ldl<70)
+	{
+		document.getElementById('patient_statin_recommendation').value='none';
+		return false;
+	}
+	calculate_ascvd_risk();
+	var ascvd = parseFloat(document.getElementById('patient_ascvd_risk').value);
+	if(document.getElementById('patient_dm').value == 'y')
+	{
+		if(ascvd>=7.5)
+		{
+			document.getElementById('patient_statin_recommendation').value='hir';
+			return false;
+		}
+		else
+		{
+			document.getElementById('patient_statin_recommendation').value='mod';
+			return false;
+		}
+	}
+	if(ascvd>=7.5)
+	{
+		document.getElementById('patient_statin_recommendation').value='modhi';
+		return false;
+	}
+	if(ascvd>=5)
+	{
+		document.getElementById('patient_statin_recommendation').value='modr';
+		return false;
+	}
+	document.getElementById('patient_statin_recommendation').value='none';
+	return false;
+}
+
 function calculate_ascvd_risk()
 {
-	age = parseInt(document.getElementById('patient_age').value);
+	var age = parseInt(document.getElementById('patient_age').value);
 	if(age<20 || age>79)
 	{
-		document.getElementById('patient_ascvd_risk').value=0;
+		document.getElementById('patient_ascvd_risk').value='0';
 		return false;
 	}
 	var tc = parseInt(document.getElementById('patient_tc').value);
 	if(tc<20 || tc>1000)
 	{
-		document.getElementById('patient_ascvd_risk').value=0;
+		document.getElementById('patient_ascvd_risk').value='0';
 		return false;
 	}
 	var hdl = parseInt(document.getElementById('patient_hdl').value);
 	if(hdl<1 || hdl>200)
 	{
-		document.getElementById('patient_ascvd_risk').value=0;
+		document.getElementById('patient_ascvd_risk').value='0';
 		return false;
 	}
 	var sbp = parseInt(document.getElementById('patient_sbp').value);
 	if(sbp<30 || sbp>300)
 	{
-		document.getElementById('patient_ascvd_risk').value=0;
+		document.getElementById('patient_ascvd_risk').value='0';
 		return false;
 	}
 	var bpmed = document.getElementById('patient_bpmed').value;
