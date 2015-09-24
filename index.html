@@ -67,10 +67,20 @@
 						<option value='1'>I</option>
 						<option value='2'>II</option>
 					</select></td></tr>
+					<tr><td>Clinical ASCVD?</td><td><select id='patient_ascvd' style='width:3em;'>
+						<option value='n'>No</option>
+						<option value='y'>Yes</option>
+					</select></td></tr>
 				</table>
 				<table align='center'>
 					<tr><th colspan='2'>Risk</th></tr>
 					<tr><td>ASCVD 10yr Risk</td><td><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td></tr>
+					<tr><td>Rec. Statin</td><td><select id='patient_statin_recommendation'>
+						<option value='none'>None</option>
+						<option value='mod'>Moderate</option>
+						<option value='modhi'>Mod-High</option>
+						<option value='hi'>High</option>
+					</td></tr>
 				</table>
 			</div>
 			
