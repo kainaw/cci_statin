@@ -79,8 +79,30 @@ img.rule {
 	margin:2px 0px 2px 0px;
 }
 
+.note {
+	font-size:75%;
+}
+
 #splashmenu a {
 	color:black;
+}
+
+table {
+	font-size: inherit;
+}
+
+select {
+	font-size: inherit;
+}
+
+input {
+	font-size: inherit;
+}
+
+.inset {
+	margin:0px;
+	background:white;
+	font-size:inherit;
 }
 
 #copyright {

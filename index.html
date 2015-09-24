@@ -23,15 +23,36 @@
 			<img src='cci-logo.png' id='logo'>
 			<img src='blueplusrule.png' class='rule'>
 			<div id='splashmenu'>
+				<a href='' onclick="return show('patient');">Current Patient</a><br>
 				<a href=''>Aspirin</a><br>
 				<a href=''>Blood Pressure</a><br>
 				<a href='#' onclick="return show('statin_start');">Cholesterol</a><br>
 				<a href=''>Smoking</a><br>
 			</div>
 			
+			<div id='patient' class='flow'>
+				Current Patient<br>
+				<table align='center'>
+					<tr><td>Gender</td><td><select id='patient_gender' style='width:4em;'>
+						<option value='?'>Select</option>
+						<option value='f'>Female</option>
+						<option value='m'>Male</option>
+					</select></td></tr>
+					<tr><td>Race</td><td><select id='patient_race' style='width:4em;'>
+						<option value='?'>Select</option>
+						<option value='w'>White</option>
+						<option value='b'>Black</option>
+						<option value='o'>Other</option>
+					</select></td></tr>
+					<tr><td>Age</td><td><input type='number' id='patient_age' value='' style='width:4em;'></td></tr>
+				</table>
+			</div>
+			
 			<div id='statin_start' class='flow'>
 				Is the patient &gt;21 years of age?<br>
-				<button type='button' class='yes'>Yes</button>
+				<button type='button' class='yes'
+					onclick="return show('statin_cascvd');"
+				>Yes</button>
 				<button type='button' class='no'
 					onclick="return show('statin_u21');"
 				>No</button>
@@ -46,6 +67,19 @@
 				<button type='button'
 					onclick="return show('splashmenu');"
 				>ABCS Menu</button>
+			</div>
+			
+			<div id='statin_cascvd' class='flow'>
+				<div class='inset'>
+					Patient &gt;21 years old.
+				</div>
+				Does the patient have clinical ASCVD?<br>
+				<button type='button' class='yes'
+				>Yes</button>
+				<button type='button' class='no'
+					onclick="return show('statin_u21');"
+				>No</button><br>
+				<span class='note'>Screen for clinical ASCVD every 5 years.</span>
 			</div>
 			
 		</div>

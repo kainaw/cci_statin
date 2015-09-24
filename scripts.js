@@ -1,8 +1,11 @@
 var divs = [
 	'splashmenu',
 	'statin_start',
-	'statin_u21'
+	'statin_u21',
+	'statin_cascvd'
 ];
+
+var age=-1;
 
 function clear_screen()
 {
@@ -20,4 +23,14 @@ function show(id)
 	if(id != 'splashmenu')
 		document.getElementById(id).style.background='#ffd';
 	return false;
+}
+
+function statin_start()
+{
+	if(age<0)
+		return show('statin_start');
+	else if(age<=21)
+		return show('statin_u21');
+	else
+		return show('statin_cascvd');
 }
