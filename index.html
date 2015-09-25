@@ -36,12 +36,12 @@
 				<table align='center'>
 					<tr><th colspan='2'>Demographics</th></tr>
 					<tr><td>Gender</td><td><select id='patient_gender' style='width:4em;' onchange="calculate_ascvd_risk();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='f'>Female</option>
 						<option value='m'>Male</option>
 					</select></td></tr>
 					<tr><td>Race</td><td><select id='patient_race' style='width:4em;' onchange="calculate_ascvd_risk();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='w'>White</option>
 						<option value='b'>Black</option>
 						<option value='o'>Other</option>
@@ -57,37 +57,37 @@
 				<table align='center'>
 					<tr><th colspan='2'>Disease and Treatment</th></tr>
 					<tr><td>On BP medication</td><td><select id='patient_bpmed' style='width:3.5em;' onchange="calculate_ascvd_risk();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Tobacco user</td><td><select id='patient_smoke' style='width:3.5em;' onchange="calculate_ascvd_risk();calculate_cessation();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Hypertensive</td><td><select id='patient_htn' style='width:3.5em;' onchange="calculate_bp();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Ischemic Vascular Dis</td><td><select id='patient_ivd' style='width:3.5em;' onchange="calculate_aspirin();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Diabetic</td><td><select id='patient_dm' style='width:3.5em;' onchange="calculate_ascvd_risk();calculate_statin();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Clinical ASCVD</td><td><select id='patient_ascvd' style='width:3.5em;' onchange="calculate_statin();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
 					<tr><td>Target Organ Damage</td><td><select id='patient_tod' style='width:3.5em;' onchange="calculate_statin();">
-						<option value='?'>Select</option>
+						<option value='?' selected='true' disabled='disabled'>Select</option>
 						<option value='n'>No</option>
 						<option value='y'>Yes</option>
 					</select></td></tr>
@@ -95,7 +95,7 @@
 				<table align='center'>
 					<tr><th colspan='2'>Risk and Recommendations</th></tr>
 					<tr>
-						<td>ASCVD 10yr Risk</td>
+						<td>ASCVD Risk</td>
 						<td><input type='number' id='patient_ascvd_risk' value='' style='width:4em;'>%</td>
 					</tr>
 					<tr>
@@ -121,6 +121,7 @@
 					<tr>
 						<td>Smoke Cess</td>
 						<td><select id='patient_cessation'>
+							<option value='screen'>Screen</option>
 							<option value='none'>None</option>
 							<option value='cessation'>Med/Advice</option>
 						</select>
