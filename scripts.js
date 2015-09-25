@@ -35,7 +35,10 @@ var divs = [
 	'statin_ascvd',
 	'statin_no3',
 	'statin_himod',
-	'statin_mod2'
+	'statin_mod2',
+	'smoke_start',
+	'smoke_yes',
+	'smoke_no'
 ];
 
 function clear_screen()

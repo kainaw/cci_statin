@@ -5,26 +5,28 @@
 		<script language='javascript' src='scripts.js'></script>
 	</head>
 	<body onload='resize();'>
+		<!-- Popup Menu Start -->
 		<button id='menuopenbutton' onclick="document.getElementById('menu').style.display='block';"><img src='menu512.png' alt='&equiv;'></button>
 		<div id='menu'>
 			<button id='menuclosebutton' onclick="document.getElementById('menu').style.display='none';">&times;</button>
 			<img src='cci-logo.png'>
 			<hr>
-			<a href='' onclick="return show('patient');">Current Patient</a>
+			<a href='#' onclick="return show('patient');">Current Patient</a>
 			<a href='#' onclick="return show('aspirin_start');">Aspirin</a>
 			<a href=''>Blood Pressure</a>
 			<a href='#' onclick="return show('statin_start');">Cholesterol</a>
-			<a href=''>Smoking</a>
+			<a href='#' onclick="return show('smoke_start');">Smoking</a>
 		</div>
+		<!-- Popup Menu End -->
 		<div id='content'>
 			<img src='cci-logo.png' id='logo'>
 			<img src='blueplusrule.png' class='rule'>
 			<div id='splashmenu'>
-				<a href='' onclick="return show('patient');">Current Patient</a><br>
+				<a href='#' onclick="return show('patient');">Current Patient</a><br>
 				<a href='#' onclick="return show('aspirin_start');">Aspirin</a><br>
 				<a href=''>Blood Pressure</a><br>
 				<a href='#' onclick="return show('statin_start');">Cholesterol</a><br>
-				<a href=''>Smoking</a><br>
+				<a href='#' onclick="return show('smoke_start');">Smoking</a><br>
 			</div>
 
 			<div id='patient' class='flow'>
@@ -126,28 +128,20 @@
 				</table>
 			</div>
 			
+			<!-- Aspirin Start -->
 			<div id='aspirin_start' class='flow'>
 				Is the patient &ge;18 years of age?<br>
-				<button type='button' class='yes'
-					onclick="return show('aspirin_ivd');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('aspirin_u18');"
-				>No</button>
+				<button type='button' class='yes' onclick="return show('aspirin_ivd');">Yes</button>
+				<button type='button' class='no' onclick="return show('aspirin_u18');">No</button>
 			</div>
 			
 			<div id='aspirin_u18' class='flow'>
 				<div class='inset'>
 					Patient is &lt;18 years old.
 				</div>
-				Aspirin recommendations are for patients over the age of 18.
-				<br>
-				<button type='button'
-					onclick="return force('aspirin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				Aspirin recommendations are for patients over the age of 18.<br>
+				<button type='button' onclick="return force('aspirin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='aspirin_ivd' class='flow'>
@@ -155,12 +149,8 @@
 					Patient is &ge;18 years old.
 				</div>
 				Does the patient have IVD?<br>
-				<button type='button' class='yes'
-					onclick="return show('aspirin_recommend');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('aspirin_no');"
-				>No</button>
+				<button type='button' class='yes' onclick="return show('aspirin_recommend');">Yes</button>
+				<button type='button' class='no' onclick="return show('aspirin_no');">No</button>
 			</div>
 			
 			<div id='aspirin_no' class='flow'>
@@ -168,14 +158,9 @@
 					Patient is &ge;18 years old.<br>
 					Patient does not have IVD.
 				</div>
-				A daily aspirin/antithrombotic regimen is not recommended for patients without IVD.
-				<br>
-				<button type='button'
-					onclick="return force('aspirin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				A daily aspirin/antithrombotic regimen is not recommended for patients without IVD.<br>
+				<button type='button' onclick="return force('aspirin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='aspirin_recommend' class='flow'>
@@ -183,36 +168,25 @@
 					Patient is &ge;18 years old.<br>
 					Patient has IVD.
 				</div>
-				A daily aspirin/antithrombotic regimen is recommended for patients &ge;18 years old with IVD.
-				<br>
-				<button type='button'
-					onclick="return force('aspirin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button><br>
+				A daily aspirin/antithrombotic regimen is recommended for patients &ge;18 years old with IVD.<br>
+				<button type='button' onclick="return force('aspirin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button><br>
 				<span class='note'>Ensure patient does not have an allergy to aspirin.</span>
 			</div>
+			<!-- Aspirin End -->
 			
+			<!-- Statin Start -->
 			<div id='statin_start' class='flow'>
 				Is the patient &gt;21 years of age?<br>
-				<button type='button' class='yes'
-					onclick="return show('statin_cascvd');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_u21');"
-				>No</button>
+				<button type='button' class='yes' onclick="return show('statin_cascvd');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_u21');">No</button>
 			</div>
 			
 			<div id='statin_u21' class='flow'>
 				Statin dose recommendations are for patients over the age of 21.
 				<br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_cascvd' class='flow'>
@@ -220,12 +194,8 @@
 					Patient &gt;21 years old.
 				</div>
 				Does the patient have clinical ASCVD?<br>
-				<button type='button' class='yes'
-					onclick="return show('statin_hi1');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_ldl190');"
-				>No</button><br>
+				<button type='button' class='yes' onclick="return show('statin_hi1');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_ldl190');">No</button><br>
 				<span class='note'>Screen for clinical ASCVD every 5 years.</span>
 			</div>
 			
@@ -242,12 +212,8 @@
 					&ge;80mg Simvastatin
 				</span>
 				<br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_ldl190' class='flow'>
@@ -255,12 +221,8 @@
 					Patient &gt;21 years old.<br>
 				</div>
 				Is the patient's most recent LDL &ge;190?<br>
-				<button type='button' class='yes'
-					onclick="return show('statin_hi2');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_a4075');"
-				>No</button><br>
+				<button type='button' class='yes' onclick="return show('statin_hi2');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_a4075');">No</button><br>
 				<span class='note'>Check LDL every 5 years.</span>
 			</div>
 			
@@ -277,12 +239,8 @@
 					&ge;80mg Simvastatin
 				</span>
 				<br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_a4075' class='flow'>
@@ -290,12 +248,8 @@
 					Patient &gt;21 years old.
 				</div>
 				Is the patient between 40 and 75 years old?<br>
-				<button type='button' class='yes'
-					onclick="return show('statin_ldl70');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_no1');"
-				>No</button><br>
+				<button type='button' class='yes' onclick="return show('statin_ldl70');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_no1');">No</button><br>
 			</div>
 			
 			<div id='statin_no1' class='flow'>
@@ -303,12 +257,8 @@
 					Patient &lt;40 or &gt;75 years old.
 				</div>
 				There is no statin recommendation for this patient.<br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_ldl70' class='flow'>
@@ -316,12 +266,8 @@
 					Patient between 40 and 75 years old.
 				</div>
 				Is the patient's LDL between 70 and 189?<br>
-				<button type='button' class='yes'
-					onclick="return show('statin_ascvd');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_no2');"
-				>No</button><br>
+				<button type='button' class='yes' onclick="return show('statin_ascvd');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_no2');">No</button><br>
 			</div>
 			
 			<div id='statin_no2' class='flow'>
@@ -330,12 +276,8 @@
 					Patient's LDL &lt;70.
 				</div>
 				There is no statin recommendation for this patient.<br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_ascvd' class='flow'>
@@ -345,12 +287,8 @@
 				</div>
 				Is the patient's ASCVD risk &ge;7.5%?<br>
 				<button type='button' onclick="return show('ascvd');">Calculate ASCVD Risk</button><br>
-				<button type='button' class='yes'
-					onclick="return show('statin_ldl70');"
-				>Yes</button>
-				<button type='button' class='no'
-					onclick="return show('statin_no2');"
-				>No</button><br>
+				<button type='button' class='yes' onclick="return show('statin_ldl70');">Yes</button>
+				<button type='button' class='no' onclick="return show('statin_no2');">No</button><br>
 			</div>
 			
 			<div id='statin_mod' class='flow'>
@@ -370,6 +308,9 @@
 					5-10mg Rosuvastatin<br>
 					20-40mg Simvastatin
 				</span>
+				<br>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_modhi' class='flow'>
@@ -389,13 +330,9 @@
 					5-10mg Rosuvastatin<br>
 					20-40mg Simvastatin
 				</span><br>
-				A Higher intensity statin as reasonable.
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				A Higher intensity statin as reasonable.<br>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 			
 			<div id='statin_no3' class='flow'>
@@ -405,13 +342,9 @@
 					Patient is not diabetic.<br>
 					Patient's ASCVD risk &lt;7.5%
 				</div>
-				There is no statin recommendation for this patient.
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				There is no statin recommendation for this patient.<br>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 
 			<div id='statin_himod' class='flow'>
@@ -431,12 +364,8 @@
 					&gt;5mg Rosuvastatin<br>
 					&gt;20mg Simvastatin
 				</span><br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
 
 			<div id='statin_mod2' class='flow'>
@@ -456,14 +385,12 @@
 					5-10mg Rosuvastatin<br>
 					20-40mg Simvastatin
 				</span><br>
-				<button type='button'
-					onclick="return force('statin_start');"
-				>Start Over</button><br>
-				<button type='button'
-					onclick="return show('splashmenu');"
-				>ABCS Menu</button>
+				<button type='button' onclick="return force('statin_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
 			</div>
-
+			<!-- Statin End -->
+			
+			
 			<div id='ascvd' class='flow'>
 				ASCVD Risk Calculator<br>
 				<table align='center'>
@@ -491,6 +418,23 @@
 				<button type='button' onclick="return statin_ascvd_risk();">Calculate ASCVD Risk</button>
 			</div>
 			
+			<div id='smoke_start' class='flow'>
+				Does the patient use tobacco products?<br>
+				<button type='button' class='yes' onclick="return show('smoke_yes');">Yes</button>
+				<button type='button' class='no' onclick="return show('smoke_no');">No</button><br>
+			</div>
+			
+			<div id='smoke_no' class='flow'>
+				Record the patient's tobacco use status.<br>
+				<button type='button' onclick="return force('smoke_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
+			</div>
+
+			<div id='smoke_yes' class='flow'>
+				Provide the patient with tobacco cessation advice, councelling, and/or medications.<br>
+				<button type='button' onclick="return force('smoke_start');">Start Over</button><br>
+				<button type='button' onclick="return show('splashmenu');">ABCS Menu</button>
+			</div>
 		</div>
 		<div id='copyright'>
 			By using this application, you agree to the end user <a href='terms.html'>terms and conditions</a>.
